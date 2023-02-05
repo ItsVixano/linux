@@ -1069,13 +1069,13 @@ err_disable_vregs:
 	return ret;
 }
 
-static int aw9523_remove(struct i2c_client *client)
+static void aw9523_remove(struct i2c_client *client)
 {
 	struct aw9523 *awi = i2c_get_clientdata(client);
 	int ret;
 
 	if (!awi)
-		return 0;
+		return;
 
 	/*
 	 * If the chip VIO is connected to a regulator that we can turn
@@ -1090,11 +1090,11 @@ static int aw9523_remove(struct i2c_client *client)
 		ret = aw9523_hw_init(awi);
 		mutex_unlock(&awi->i2c_lock);
 		if (ret)
-			return ret;
+			return;
 	}
 
 	mutex_destroy(&awi->i2c_lock);
-	return 0;
+	return;
 }
 
 static const struct i2c_device_id aw9523_i2c_id_table[] = {
