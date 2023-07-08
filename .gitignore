@@ -168,3 +168,6 @@ sphinx_*/
 
 # Rust analyzer configuration
 /rust-project.json
+
+# Ignore surface config repo
+/linux-mainline-surface-pro-2013/
