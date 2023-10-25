@@ -170,3 +170,7 @@ sphinx_*/
 
 # Rust analyzer configuration
 /rust-project.json
+
+# Ignore asus linux project
+/linux-asus-tuf-f15-2023/
+arch/x86/configs/archlinux_defconfig
