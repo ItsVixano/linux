@@ -185,7 +185,7 @@
 };
 
 &ft5406_ts {
-	status = "disabled";
+	status = "ok";
 
 	touchscreen-size-x = <1080>;
 	touchscreen-size-y = <2280>;
@@ -199,7 +199,7 @@
 };
 
 &panel {
-	compatible = "xiaomi,daisy-panel";
+	compatible = "himax,hx8399c-fhdplus";
 };
 
 &pm8953_l23 {
