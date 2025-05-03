@@ -229,7 +229,7 @@ static int __init simplefb_earlycon_setup(struct earlycon_device *device,
 	xres = si->lfb_width;
 	yres = si->lfb_height;
 
-	font = get_default_font(xres, yres, -1, -1);
+	font = get_default_font(xres, yres, NULL, NULL);
 	if (!font)
 		return -ENODEV;
 
