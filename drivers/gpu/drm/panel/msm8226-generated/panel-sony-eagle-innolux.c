@@ -355,7 +355,7 @@ static void innolux_remove(struct mipi_dsi_device *dsi)
 }
 
 static const struct of_device_id innolux_of_match[] = {
-	{ .compatible = "innolux" }, // FIXME
+	{ .compatible = "sony,eagle-panel-innolux" },
 	{ /* sentinel */ }
 };
 MODULE_DEVICE_TABLE(of, innolux_of_match);
@@ -364,7 +364,7 @@ static struct mipi_dsi_driver innolux_driver = {
 	.probe = innolux_probe,
 	.remove = innolux_remove,
 	.driver = {
-		.name = "panel-innolux",
+		.name = "panel-eagle-innolux",
 		.of_match_table = innolux_of_match,
 	},
 };
