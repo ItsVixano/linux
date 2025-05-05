@@ -10,6 +10,8 @@
 
 #include "pm8226.dtsi"
 
+/delete-node/ &smem_region;
+
 / {
 	chosen {
 		#address-cells = <1>;
@@ -43,6 +45,11 @@
 
 		display_reserved: framebuffer@3201000 {
 			reg = <0x3201000 (540 * 960 * 3)>;
+			no-map;
+		};
+
+		smem_region: smem@fa00000 {
+			reg = <0x0fa00000 0x100000>;
 			no-map;
 		};
 	};
