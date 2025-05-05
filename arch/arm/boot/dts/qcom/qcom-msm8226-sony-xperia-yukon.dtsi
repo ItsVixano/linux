@@ -9,3 +9,33 @@
  */
 
 #include "pm8226.dtsi"
+
+/ {
+	chosen {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		stdout-path = "display0";
+
+		framebuffer: framebuffer@3201000 {
+			compatible = "simple-framebuffer";
+			reg = <0x3201000 (540 * 960 * 3)>;
+			width = <540>;
+			height = <960>;
+			stride = <(540 * 3)>;
+			format = "r8g8b8";
+		};
+	};
+
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		display_reserved: framebuffer@3201000 {
+			reg = <0x3201000 (540 * 960 * 3)>;
+			no-map;
+		};
+	};
+};
