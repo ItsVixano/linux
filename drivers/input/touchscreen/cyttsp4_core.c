@@ -2028,7 +2028,7 @@ struct cyttsp4 *cyttsp4_probe(const struct cyttsp4_bus_ops *ops,
 		return ERR_PTR(rc);
 	}
 
-	cd->power_gpio = devm_gpiod_get(dev, "power", GPIOD_OUT_HIGH);
+	cd->power_gpio = devm_gpiod_get_optional(dev, "power", GPIOD_OUT_HIGH);
 	if (IS_ERR(cd->power_gpio)) {
 		rc = PTR_ERR(cd->power_gpio);
 		dev_err(dev, "can't get power gpio (%d)\n", rc);
