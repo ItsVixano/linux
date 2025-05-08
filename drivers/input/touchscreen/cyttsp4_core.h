@@ -427,13 +427,13 @@ struct cyttsp4_signal_def {
 	int flat;
 };
 
-static inline int cyttsp4_adap_read(struct cyttsp4 *ts, u16 addr, int size,
+static inline int cyttsp4_adap_read(struct cyttsp4 *ts, int size, u16 addr,
 		void *buf)
 {
 	return ts->bus_ops->read(ts->dev, ts->xfer_buf, addr, size, buf);
 }
 
-static inline int cyttsp4_adap_write(struct cyttsp4 *ts, u16 addr, int size,
+static inline int cyttsp4_adap_write(struct cyttsp4 *ts, int size, u16 addr,
 		const void *buf)
 {
 	return ts->bus_ops->write(ts->dev, ts->xfer_buf, addr, size, buf);
