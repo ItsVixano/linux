@@ -139,10 +139,10 @@ static int cyttsp4_hw_reset(struct cyttsp4 *cd)
 		return cyttsp4_hw_soft_reset(cd);
 
 	gpiod_set_value_cansleep(cd->reset_gpio, 1);
-	msleep(40);
+	msleep(100);
 
 	gpiod_set_value_cansleep(cd->reset_gpio, 0);
-	msleep(20);
+	msleep(50);
 
 	return 0;
 }
@@ -2022,11 +2022,33 @@ struct cyttsp4 *cyttsp4_probe(const struct cyttsp4_bus_ops *ops,
 		return ERR_PTR(rc);
 	}
 
+	msleep(100);
+
+	cd->vcc_supply = devm_regulator_get(dev, "vcc");
+	if (IS_ERR(cd->vcc_supply)) {
+		rc = PTR_ERR(cd->vcc_supply);
+		if (rc != -EPROBE_DEFER)
+			dev_err(dev, "can't get vcc power (%d)\n", rc);
+		return ERR_PTR(rc);
+	}
+
+	msleep(100);
+
 	rc = regulator_enable(cd->vdd_supply);
 	if (rc) {
 		dev_err(dev, "can't enable vdd power (%d)\n", rc);
 		return ERR_PTR(rc);
 	}
+
+	msleep(100);
+
+	rc = regulator_enable(cd->vcc_supply);
+	if (rc) {
+		dev_err(dev, "can't enable vcc power (%d)\n", rc);
+		return ERR_PTR(rc);
+	}
+
+	msleep(100);
 
 	cd->power_gpio = devm_gpiod_get_optional(dev, "power", GPIOD_OUT_HIGH);
 	if (IS_ERR(cd->power_gpio)) {
@@ -2119,6 +2141,7 @@ error_disable_vdd:
 	gpiod_set_value_cansleep(cd->reset_gpio, 1);
 	gpiod_set_value_cansleep(cd->power_gpio, 0);
 	regulator_disable(cd->vdd_supply);
+	regulator_disable(cd->vcc_supply);
 	return ERR_PTR(rc);
 }
 EXPORT_SYMBOL_GPL(cyttsp4_probe);

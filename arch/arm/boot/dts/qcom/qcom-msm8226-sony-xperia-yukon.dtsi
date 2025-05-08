@@ -55,6 +55,27 @@
 	};
 };
 
+&blsp1_i2c5 {
+	status = "okay";
+
+	touchscreen@24 {
+		compatible = "cypress,cyttsp4_i2c_adapter";
+		reg = <0x24>;
+
+		interrupt-parent = <&tlmm>;
+		interrupts = <17 IRQ_TYPE_LEVEL_LOW>;
+
+		vdd-supply = <&pm8226_l19>;
+		vcc-supply = <&pm8226_lvs1>;
+
+		reset-gpios = <&tlmm 16 GPIO_ACTIVE_LOW>;
+		//power-gpios = <&tlmm 17 GPIO_ACTIVE_HIGH>;
+
+		invert-x;
+		invert-y;
+	};
+};
+
 &rpm_requests {
 	regulators {
 		compatible = "qcom,rpm-pm8226-regulators";
@@ -202,6 +223,7 @@
 		pm8226_l27: l27 {
 			regulator-min-microvolt = <2100000>;
 			regulator-max-microvolt = <2100000>;
+			regulator-always-on; // HACK
 		};
 
 		pm8226_l28: l28 {

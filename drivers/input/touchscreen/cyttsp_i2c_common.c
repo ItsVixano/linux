@@ -29,21 +29,21 @@ int cyttsp_i2c_read_block_data(struct device *dev, u8 *xfer_buf,
 	struct i2c_client *client = to_i2c_client(dev);
 	u8 client_addr = client->addr | ((addr >> 8) & 0x1);
 	u8 addr_lo = addr & 0xFF;
-	struct i2c_msg msgs[] = {
-		{
-			.addr = client_addr,
-			.flags = 0,
-			.len = 1,
-			.buf = &addr_lo,
-		},
-		{
-			.addr = client_addr,
-			.flags = I2C_M_RD,
-			.len = length,
-			.buf = values,
-		},
-	};
+	struct i2c_msg msgs[2];
 	int retval;
+
+	if (length == 0)
+		return 0;
+
+	msgs[0].addr = client_addr;
+	msgs[0].flags = 0;
+	msgs[0].len = 1;
+	msgs[0].buf = &addr_lo;
+
+	msgs[1].addr = client_addr;
+	msgs[1].flags = I2C_M_RD;
+	msgs[1].len = length;
+	msgs[1].buf = values;
 
 	retval = i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
 	if (retval < 0)

@@ -345,6 +345,7 @@ struct cyttsp4 {
 	struct gpio_desc *reset_gpio;
 	struct gpio_desc *power_gpio;
 	struct regulator *vdd_supply;
+	struct regulator *vcc_supply;
 };
 
 struct cyttsp4_bus_ops {
